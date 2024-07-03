@@ -30,18 +30,18 @@ def timer(min, sec, son):
     print("Départ du timer pour " , min , " minutes et " , sec , " secodes\n")
     print(min,":",sec)
     while duree != 0:
-        t.sleep(2)
+        t.sleep(1)
         if sec != 0:
             sec -= 1
             print(min,":",sec)
         elif sec == 0 and min != 0:
             if min == 1:
                 min = 0
-                sec = 58
+                sec = 59
                 print(min,":",sec)
             elif min > 1:
                 min -= 1
-                sec -= 1
+                sec = 59
                 print(min,":",sec) 
         duree = min * 60 + sec
     print("Fin du timer\n")
@@ -84,13 +84,16 @@ def session(minSession, minTimer, secTimer, sonTimer, minBreak, secBreak, sonBre
     while dureeSession != 0:
         print("Depart session ", nbSess,"\n")
         timer(minTimer, secTimer, sonTimer) # timer
+        temp1 = dureeSession - (minTimer *60)
         print("\nBREAK!\n")
         timer(minBreak, secBreak, sonBreak) # break
-        dureeSession = dureeSession - (minTimer * 60 + secTimer + minBreak * 60 + secBreak)
+        minBreak *= 60
+        dureeSession -= minBreak
+        dureeSession -= secBreak
         nbSess += 1
 
 def entrainement(sessions, timers, breaks):
-    t.sleep(10)
+    t.sleep(5)
     for i in range(len(sessions)):
         session(sessions[i], timers[i][0], timers[i][1], timers[i][2], breaks[i][0], breaks[i][1], breaks[i][2])
         
@@ -117,6 +120,7 @@ def setSession(sessions):
     for i in range(nbSess):
         print("Session ", i+1, " va durée ", session[i], " minutes\n")
     """
+
 def setTimer(nbSession, timers):
     print("\nVous devez faire ", nbSession, " sessions\n")
     for i in range(nbSession):
