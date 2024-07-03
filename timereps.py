@@ -90,17 +90,17 @@ def session(minSession, minTimer, secTimer, sonTimer, minBreak, secBreak, sonBre
 
 def entrainement(sessions, timers, breaks):
     for i in range(len(sessions)):
-        session(sessions[i], timers[i][0], timers[i][1], timers[i][2], breaks[0], breaks[1], breaks[2])
+        session(sessions[i], timers[i][0], timers[i][1], timers[i][2], breaks[i][0], breaks[i][1], breaks[i][2])
         
 
-sessions = [2, 2, 3]
+sessions = [3, 2, 5, 5, 10]
 
-timers = [[0,20,0], [0,20,0], [0,30,0]] # (minute, secodes, num_son)
+timers = [[1,0,0], [0,30,0], [0,20,0], [0,20,0], [0,30,0]] # (minute, secodes, num_son)
 
-breaks = [0,10,1]
+breaks = [[0,30,1], [0,30,1], [0,10,1], [0,10,1], [0,10,1]]
 
 
-# entrainement(sessions, timers, breaks)
+entrainement(sessions, timers, breaks)
 
-chrono(1)
+#chrono(1)
 
