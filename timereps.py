@@ -84,23 +84,125 @@ def session(minSession, minTimer, secTimer, sonTimer, minBreak, secBreak, sonBre
     while dureeSession != 0:
         print("Depart session ", nbSess,"\n")
         timer(minTimer, secTimer, sonTimer) # timer
+        print("\nBREAK!\n")
         timer(minBreak, secBreak, sonBreak) # break
         dureeSession = dureeSession - (minTimer * 60 + secTimer + minBreak * 60 + secBreak)
         nbSess += 1
 
 def entrainement(sessions, timers, breaks):
+    t.sleep(10)
     for i in range(len(sessions)):
         session(sessions[i], timers[i][0], timers[i][1], timers[i][2], breaks[i][0], breaks[i][1], breaks[i][2])
         
+def setSession(sessions):
+    print("\nCombien de session(s) souhaitez-vous faire? \n")
+    nbSess= input()
+    try:
+        nbSess = int(nbSess)
+    except ValueError:
+        print("Entrée invalide. Veuillez entrer un nombre.")
+        return
+    for i in range(nbSess):
+        print("\nCombien de temps dure la session ", i+1, "?\n")
+        nbTemps = input()
+        try:
+            nbSess = int(nbSess)
+        except ValueError:
+            print("Entrée invalide. Veuillez entrer un nombre.")
+            return
+        sessions.append(nbTemps)
+    """
+    print("\nRécapitulatif de la session d'entrainement:\n")
+    print("Vous allez faire ", nbSess, " session(s)\n")
+    for i in range(nbSess):
+        print("Session ", i+1, " va durée ", session[i], " minutes\n")
+    """
+def setTimer(nbSession, timers):
+    print("\nVous devez faire ", nbSession, " sessions\n")
+    for i in range(nbSession):
+        interTimer = [0, 0, 0]
+        print("\nVeuillez saisir le nombre de minutes à répéter pour la pratique de la session ", i+1,"\n")
+        nbMin = input()
+        try:
+            nbMin = int(nbMin)
+        except ValueError:
+            print("Entrée invalide. Veuillez entrer un nombre.")
+            return
+        interTimer[0] = nbMin
+            
+        print("\nVeuillez saisir le nombre de secondes à répéter pour la session", i+1,"\n")
+        nbSec = input()
+        try:
+            nbSec = int(nbSec)
+        except ValueError:
+            print("Entrée invalide. Veuillez entrer un nombre.")
+            return
+        interTimer[1] = nbSec
+        timers.append(interTimer)
 
-sessions = [3, 2, 5, 5, 10]
+def setBreak(nbSession, breaks):
+    print("\nVous devez faire ", nbSession, " sessions\n")
+    for i in range(nbSession):
+        interBreak = [0, 0, 1]
+        print("\nVeuillez saisir le nombre de minutes à répéter pour le break ", i+1, "\n")
+        nbMin = input()
+        try:
+            nbMin = int(nbMin)
+        except ValueError:
+            print("Entrée invalide. Veuillez entrer un nombre.")
+            return
+        interBreak[0] = nbMin
 
-timers = [[1,0,0], [0,30,0], [0,20,0], [0,20,0], [0,30,0]] # (minute, secodes, num_son)
+        print("\nVeuillez saisir le nombre de secondes à répéter pour le break ", i+1, "\n")
+        nbSec = input()
+        try:
+            nbSec = int(nbSec)
+        except ValueError:
+            print("Entrée invalide. Veuillez entrer un nombre.")
+            return
+        interBreak[1] = nbSec
+        breaks.append(interBreak)
+    
 
-breaks = [[0,30,1], [0,30,1], [0,10,1], [0,10,1], [0,10,1]]
+def main():
+    print("\n\nBienvenue pour votre session d'entrainement:\n")
+    print("Que voulez vous faire? 1. Session - 2. Chronomètre - 5. Quitter\n")
+    choix = input()
 
+    try:
+        choix = int(choix)
+    except ValueError:
+        print("Entrée invalide. Veuillez entrer un nombre.")
+        return
+    
+    if choix == 1:
+        sessions = []
+        timers = []
+        breaks = []
+        setSession(sessions)
+        nbSession = len(sessions)
+        setTimer(nbSession, timers)
+        setBreak(nbSession, breaks)
+        entrainement(sessions, timers, breaks)
+        print("Votre Session est terminée! A demain!!\n")
+        return
+    elif choix == 2:
+        chrono(1)
+        print("\n\nLe chrono est terminé! A demain!!\n")
+        return
+    elif choix == 5:
+        print("A demain!!!!\n")
+        return
+    else: 
+        print("Option invalide. Veuillez choisir un chiffre entre 1, 2 et 5\n")
+        return
+"""
+sessions = [2, 5, 5, 10]
 
-entrainement(sessions, timers, breaks)
+timers = [[0,30,0], [0,20,0], [0,20,0], [0,30,0]] # (minute, secodes, num_son)
 
-#chrono(1)
+breaks = [[0,30,1], [0,10,1], [0,10,1], [0,10,1]]
 
+main(sessions, timers, breaks)
+"""
+main()
